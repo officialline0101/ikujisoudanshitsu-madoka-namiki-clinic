@@ -1578,35 +1578,67 @@
             updateDisplayInfo();
         }
 
+// ---------------------------------------------------------
+        // ▼▼▼ 修正箇所：二重送信防止用の変数を定義 ▼▼▼
+        let isSubmitting = false; 
+        // ---------------------------------------------------------
+
+        // ... (他の変数はそのまま) ...
+
         function submitForm() {
+            // ▼▼▼ 修正箇所：すでに送信処理中なら何もしない ▼▼▼
+            if (isSubmitting) {
+                return;
+            }
+
+            // ▼▼▼ 修正箇所：送信フラグを立てて、ボタンを無効化（連打防止） ▼▼▼
+            isSubmitting = true;
+            const submitBtn = document.querySelector('.submit-button');
+            const originalText = submitBtn.textContent; // 元のテキストを保存
+            submitBtn.disabled = true;
+            submitBtn.textContent = '送信中...';
+            submitBtn.style.backgroundColor = '#ccc'; // 色を変えて無効感を出す
+
+            // エラーなどで処理を中断する場合に、ボタンを元に戻す関数
+            const resetSubmitState = () => {
+                isSubmitting = false;
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+                submitBtn.style.backgroundColor = '#7ebd74'; // 元の色に戻す
+            };
+
             const formData = {
                 name: document.getElementById('name').value.trim(),
                 phone: document.getElementById('phone').value.trim(),
                 visitCount: visitCount,
-                selectedSymptom: selectedSymptom && selectedSymptom.length > 0 ? selectedSymptom : null, // 空の選択肢をチェック
+                selectedSymptom: selectedSymptom && selectedSymptom.length > 0 ? selectedSymptom : null, 
                 irradiationsCount: irradiationsCount,
-                dates: selectedFullDate ? [selectedFullDate] : null, // 空チェック
+                dates: selectedFullDate ? [selectedFullDate] : null, 
                 message: document.getElementById('message').value.trim()
             };
 
             // フォームデータのチェック
             if (!formData.name) {
                 alert('お名前を入力してください。');
+                resetSubmitState(); // ▼▼▼ ボタンを元に戻す
                 return;
             }
 
             if (!formData.phone) {
                 alert('電話番号を入力してください。');
+                resetSubmitState(); // ▼▼▼ ボタンを元に戻す
                 return;
             }
 
             if (!formData.selectedSymptom) {
                 alert('メニューを選択してください。');
+                resetSubmitState(); // ▼▼▼ ボタンを元に戻す
                 return;
             }
 
             if (!formData.dates) {
                 alert('希望日時を選択してください。');
+                resetSubmitState(); // ▼▼▼ ボタンを元に戻す
                 return;
             }
 
@@ -1637,9 +1669,12 @@ ${formData.dates[0]}
                 alert('当日キャンセルは無いようにお願いいたします。');
                 /* LIFFウィンドウを閉じる */
                 liff.closeWindow();
+                // 成功時はウィンドウが閉じるので、ボタンを戻す必要はありません
             }).catch((err) => {
                 /* メッセージ送信失敗時の処理 */
                 console.error('メッセージの送信に失敗しました', err);
+                alert('送信に失敗しました。もう一度お試しください。');
+                resetSubmitState(); // ▼▼▼ 失敗時は再試行できるようにボタンを元に戻す
             });
         }
 
