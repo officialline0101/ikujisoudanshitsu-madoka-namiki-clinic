@@ -15,9 +15,9 @@
             /* さらに右へ */
             top: 80%;
             /* 画面中央に固定 */
-            transform: translateY(-50%) translateX(10px);
+            transform: translateY(-50%) translateX(16px);
             /* 中央配置と右ずらし */
-            background: #3e3f41;
+            background: #fcdb57;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -38,7 +38,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: white;
+            color: #050505;
             text-decoration: none;
             font-size: 10px;
             margin: 5px 0;
@@ -96,7 +96,7 @@
             background-color: #fdfdfd;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            width: 90%;
+            width: 96%;
             max-width: 500px;
             padding: 25px;
             box-sizing: border-box;
@@ -104,8 +104,8 @@
         }
 
         h1 {
-            background: linear-gradient(135deg, #3e3f41, #0c0c0c);
-            color: white;
+            background: linear-gradient(135deg, #fcdb57, #fcdb57);
+            color: #313131;
             padding: 20px;
             border-radius: 0 0px 0px 0px;
             text-align: center;
@@ -123,17 +123,17 @@
             margin-bottom: 20px;
             padding: 3px;
             font-weight: 400;
-            background-color: #ffffff;
-            color: #1f1f20;
+            background-color: #fcdb57;
+            color: #313131;
             border-radius: 0px;
             font-size: 18px;
             text-align: center;
             text-indent: 20px;
             position: relative;
             overflow: hidden;
-            border-top: 3px solid black;
+            border-top: 1px solid black;
             /* 上の線 */
-            border-bottom: 3px solid black;
+            border-bottom: 1px solid black;
             /* 下の線 */
         }
 
@@ -141,17 +141,17 @@
             display: block;
             margin-bottom: 20px;
             padding: 3px;
-            background-color: #ffffff;
-            color: #1f1f20;
+            background-color: #fcdb57;
+            color: #313131;
             border-radius: 0px;
             font-size: 18px;
             text-align: center;
             text-indent: 0px;
             position: relative;
             overflow: hidden;
-            border-top: 2px solid black;
+            border-top: 1px solid black;
             /* 上の線 */
-            border-bottom: 2px solid black;
+            border-bottom: 1px solid black;
             /* 下の線 */
         }
 
@@ -160,8 +160,8 @@
             margin-bottom: 10px;
             padding: 3px;
             font-weight: 400;
-            background-color: #ffffff;
-            color: rgb(20, 20, 20);
+            background-color: #fcdb57;
+            color: #313131;
             border-radius: 0px;
             font-size: 18px;
             text-align: center;
@@ -260,7 +260,7 @@
             border: none;
             border-radius: 4px;
             background-color: #ff4c4c;
-            color: #fff;
+            color: #0a0a0a;
             font-size: 18px;
             cursor: pointer;
         }
@@ -323,7 +323,7 @@
         }
 
         .calendar td.selected {
-            background-color: #3e3f41;
+            background-color: #fcdb57;
             color: #fff;
         }
 
@@ -597,7 +597,7 @@
 
         .highlight-text {
             display: inline-block;
-            color: #080808;
+            color: #313131;
             /* オプションテキストの色 */
         }
 
@@ -662,7 +662,7 @@
             width: 100%;
             padding: 15px;
             font-size: 18px;
-            background-color: #272727;
+            background-color: #fcdb57;
             margin-top: 12px;
             /* ← ここで下方向にずらす */
         }
@@ -690,6 +690,8 @@
             outline: 1px solid #2b2b2b;
             /* ここで枠線を指定 */
             outline-offset: 2px;
+            /* 外側に色を追加 */
+            box-shadow: 0 0 0 3px #fcdb57
         }
 
         /* 必須マークのスタイル */
@@ -988,7 +990,7 @@
     </div>
 
     <div class="container">
-        <h1>母乳育児相談室まどか<br>（並木クリニック店）予約フォーム
+        <h1>母乳育児相談室まどか<br>（金足店）<br>予約フォーム
         </h1>
         <div class="label">お客様名<span class="required">必須</span></div>
         <input type="text" id="name" placeholder="お名前を入力してください" oninput="saveInput('name')">
@@ -998,23 +1000,43 @@
 
         <div class="label">ご来店回数<span class="required">必須</span></div>
         <div class="visit-buttons">
-            <button type="button" id="firstVisit" onclick="selectVisit(this)">1回目〈30分〉</button>
-            <button type="button" id="repeatVisit" onclick="selectVisit(this)">2回目以降〈0分〉</button>
+            <button type="button" id="firstVisit" onclick="selectVisit(this)">1回目</button>
+            <button type="button" id="repeatVisit" onclick="selectVisit(this)">2回目以降</button>
         </div>
 
         <div class="label" id="course">メニューをお選びください<span class="required">必須</span></div>
-        <div class="info-text">※メニューを選択すると空き状況のカレンダーが表示されます</div>
-        <div class="symptoms">
-            <button type="button" onclick="selectSymptom(this, 'treatment1')" data-price="15000">初診・60分</button>
-            <button type="button" onclick="selectSymptom(this, 'treatment2')" data-price="15000">再診・30分</button>
-            <button type="button" onclick="selectSymptom(this, 'treatment3')" data-price="15000">入院中・30分</button>
+        <div class="info-text">※メニューを選択すると<br>空き状況のカレンダーが表示されます</div>
+        <div class="menu-sections">
+            <button type="button" onclick="showMenu('male')">桶谷式母乳マッサージ</button>
+            <button type="button" onclick="showMenu('female')">Revi・エステ</button>
         </div>
-        <div class="labeltyuuou">
-            <span class="highlight-text">オプション</span>
+
+        <div id="treatment-text" style="display: none; margin-bottom: 10px;"></div>
+
+        <div id="male" class="menu-section">
+            <div class="labeltyuuou">
+                <span class="highlight-text">◆桶谷式母乳マッサージ◆</span>
+            </div>
+            <div class="symptoms">
+                <button type="button" onclick="selectSymptom(this)" data-price="15000">初診・60分</button>
+                <button type="button" onclick="selectSymptom(this)" data-price="15000">再診・30分</button>
+            </div>
+            <div class="labeltyuuou">
+                <span class="highlight-text">オプション</span>
+            </div>
+            <div class="irradiations">
+                <button type="button" id="firstirradiations" onclick="selectirradiations(this)" data-price="0">旦那様・同席</button>
+                <button type="button" id="secondirradiations" onclick="selectirradiations(this)" data-price="0">お子様・同席</button>
+            </div>
         </div>
-        <div class="irradiations">
-            <button type="button" id="firstirradiations" onclick="selectirradiations(this)" data-price="1500">旦那様・同席</button>
-            <button type="button" id="repeatirradiations" onclick="selectirradiations(this)" data-price="150">お子様・同席</button>
+
+        <div id="female" class="menu-section">
+            <div class="labeltyuuou">
+                <span class="highlight-text">◆Revi・エステ◆</span>
+            </div>
+            <div class="symptoms">
+                <button type="button" onclick="selectSymptom(this)" data-price="15000">後日</button>
+            </div>
         </div>
 
         <div class="label">希望日時<span class="required">必須</span></div>
@@ -1061,10 +1083,10 @@
             </div>
         </div>
 
-        <div class="label">メッセージ<br>（質問等お気軽にご記入ください）</div>
+        <div class="labeltyuuou">メッセージ<br>（質問等お気軽にご記入ください）</div>
         <textarea id="message" rows="4" placeholder="メッセージを入力してください"></textarea>
 
-        <div class="label">ご予約内容</div>
+        <div class="labeltyuuou">ご予約内容</div>
         <div id="displayInfo"></div> <!-- ここに選択された情報を表示します -->
 
         <button class="submit-button" onclick="submitForm()" div id="section-message">予約を行う</button>
@@ -1085,7 +1107,7 @@
 
         document.addEventListener('DOMContentLoaded', function () {
             liff.init({
-                liffId: '2005254357-zKma9BZk'
+                liffId: '2008889652-Or9w37I3'
             }).then(() => {
                 console.log('LIFF初期化成功');
             }).catch((err) => {
@@ -1097,36 +1119,24 @@
 
         // 訪問回数ごとの時間設定 (例：初めて=20分、2回目以降=15分)
         let visitTimes = {
-            '1回目〈30分〉': 30,
-            '2回目以降〈0分〉': 0
+            '1回目': 0,
+            '2回目以降': 0
         };
 
         let selectedVisitTime = 0; // 訪問回数で選択された時間
 
         // 訪問回数ごとの時間設定 (例：初めて=20分、2回目以降=15分)
         let irradiationsTimes = {
-            '眉カット〈30分〉': 30,
-            '襟足〈30分〉': 30,
-            '背中(キャミソールライン)〈30分〉': 30,
-            '背中(腰まで)〈30分〉': 30,
-            'デコルテ〈30分〉': 30,
-            '腕〈30分〉': 30,
-            '保湿パック〈30分〉': 30,
-            'ベーシックマッサージ(パック付き)〈30分〉': 30,
-            'リラックスマッサージの(パック付き)〈30分〉': 30,
-            '美白パック〈30分〉': 30
+            '旦那様・同席': 0,
+            'お子様・同席': 0
         };
 
         let selectedirradiationsTime = 0; // 訪問回数で選択された時間
 
         let menuTimes = {
-            '和装プラン〈30分〉': 30,
-            '洋装プランA〈60分〉': 60,
-            '洋装プランB〈120分〉': 420,
-            '洋装プランC〈30分〉': 30,
-            'リラックスコース〈60分〉': 60,
-            'ベーシックコース〈30分〉': 30,
-            'スピードコース〈90分〉': 90
+            '初診・60分': 90,
+            '再診・30分': 60,
+            '後日': 0
         };
 
 
@@ -1168,7 +1178,7 @@
             const selectedMenuText = selectedMenu ? `<span style="color#0c0c0c;"><strong>コース</strong></span>：${selectedMenu}` : '・コースが未選択です';
 
             const selectedSymptomText = selectedSymptom.length > 0
-                ? `<span style="color:#0c0c0c;"><strong>メニュー</strong></span><br>・${selectedSymptom.map(item => `《${item.category}》${item.name}`).join('<br>・')}`
+                ? `<span style="color:#0c0c0c;"><strong>メニュー</strong></span><br>・${selectedSymptom.map(item => `${item.name}`).join('<br>・')}`
                 : '・メニューが未選択です';
 
             const irradiationsText = irradiationsCount
@@ -1196,13 +1206,8 @@
         </div>
         <hr>
         <div class="info-row">
-            <p>${selectedMenuText}</p>
-            <button class="edit-button" onclick="scrollToElement('course')">修正</button>
-        </div>
-        <hr>
-        <div class="info-row">
             <p>${selectedSymptomText}</p>
-            <button class="edit-button" onclick="scrollToElement('male'); scrollToElement('female'); scrollToElement('whitening');">修正</button>
+            <button class="edit-button" onclick="scrollToElement('course')">修正</button>
         </div>
         <hr>
         <div class="info-row">
@@ -1378,68 +1383,68 @@
             updateDisplayInfo();
         }
 
-function removeSymptom(button) {
-  const category = button.getAttribute('data-category');
-  const name = button.getAttribute('data-name');
-  const container = document.getElementById("selected-menus-display");
+        function removeSymptom(button) {
+            const category = button.getAttribute('data-category');
+            const name = button.getAttribute('data-name');
+            const container = document.getElementById("selected-menus-display");
 
-  // 所要時間が変わるため、選択済み日時はクリア
-  selectedFullDate = '';
+            // 所要時間が変わるため、選択済み日時はクリア
+            selectedFullDate = '';
 
-  // 1) まずUI上の該当チップを即時削除（UIを真実のソースに）
-  const itemEl = button.closest('.menu-item');
-  if (itemEl) itemEl.remove();
+            // 1) まずUI上の該当チップを即時削除（UIを真実のソースに）
+            const itemEl = button.closest('.menu-item');
+            if (itemEl) itemEl.remove();
 
-  // 2) 元ボタン（.symptoms）を非アクティブ化
-  const srcBtn = [...document.querySelectorAll('.symptoms button')].find(
-    b => b.textContent === name && b.getAttribute('data-category') === category
-  );
-  if (srcBtn) srcBtn.classList.remove('active');
+            // 2) 元ボタン（.symptoms）を非アクティブ化
+            const srcBtn = [...document.querySelectorAll('.symptoms button')].find(
+                b => b.textContent === name && b.getAttribute('data-category') === category
+            );
+            if (srcBtn) srcBtn.classList.remove('active');
 
-  // 3) 配列は「今アクティブな症状ボタン」から再構築してズレを無くす
-  selectedSymptom = [...document.querySelectorAll('.symptoms button.active')].map(b => ({
-    category: b.getAttribute('data-category'),
-    name: b.textContent
-  }));
+            // 3) 配列は「今アクティブな症状ボタン」から再構築してズレを無くす
+            selectedSymptom = [...document.querySelectorAll('.symptoms button.active')].map(b => ({
+                category: b.getAttribute('data-category'),
+                name: b.textContent
+            }));
 
-  // 4) 時間・価格を再計算（activeボタンから）
-  selectedMenuTime = 0;
-  menuPrice = 0;
-  selectedSymptom.forEach(item => {
-    selectedMenuTime += (menuTimes[item.name] || 0);
-    const btn = [...document.querySelectorAll('.symptoms button')].find(
-      b => b.textContent === item.name && b.getAttribute('data-category') === item.category
-    );
-    if (btn) menuPrice += parseInt(btn.getAttribute('data-price') || '0', 10);
-  });
+            // 4) 時間・価格を再計算（activeボタンから）
+            selectedMenuTime = 0;
+            menuPrice = 0;
+            selectedSymptom.forEach(item => {
+                selectedMenuTime += (menuTimes[item.name] || 0);
+                const btn = [...document.querySelectorAll('.symptoms button')].find(
+                    b => b.textContent === item.name && b.getAttribute('data-category') === item.category
+                );
+                if (btn) menuPrice += parseInt(btn.getAttribute('data-price') || '0', 10);
+            });
 
-  // 5) カレンダー再取得
-  if (typeof fetchAvailability === 'function') {
-    fetchAvailability(currentDate);
-  }
+            // 5) カレンダー再取得
+            if (typeof fetchAvailability === 'function') {
+                fetchAvailability(currentDate);
+            }
 
-  // 6) 詳細テキストは閉じる
-  const treatmentText = document.getElementById("treatment-text");
-  if (treatmentText) {
-    treatmentText.style.display = 'none';
-    treatmentText.innerHTML = '';
-  }
+            // 6) 詳細テキストは閉じる
+            const treatmentText = document.getElementById("treatment-text");
+            if (treatmentText) {
+                treatmentText.style.display = 'none';
+                treatmentText.innerHTML = '';
+            }
 
-  // 7) 「配列の長さ」ではなく「UIにチップが残っているか」で表示制御
-  if (container) {
-    const remain = container.querySelectorAll('.menu-item').length;
-    if (remain === 0) {
-      container.style.display = 'none';
-      container.innerHTML = '';
-      const selectedMenuNameDiv = document.getElementById('selected-menu-name');
-      if (selectedMenuNameDiv) selectedMenuNameDiv.style.display = 'none';
-    } else {
-      container.style.display = 'block';
-    }
-  }
+            // 7) 「配列の長さ」ではなく「UIにチップが残っているか」で表示制御
+            if (container) {
+                const remain = container.querySelectorAll('.menu-item').length;
+                if (remain === 0) {
+                    container.style.display = 'none';
+                    container.innerHTML = '';
+                    const selectedMenuNameDiv = document.getElementById('selected-menu-name');
+                    if (selectedMenuNameDiv) selectedMenuNameDiv.style.display = 'none';
+                } else {
+                    container.style.display = 'block';
+                }
+            }
 
-  updateDisplayInfo();
-}
+            updateDisplayInfo();
+        }
 
         function updateSelectedMenusDisplay() {
             const selectedMenusDisplay = document.getElementById("selected-menus-display");
@@ -1594,7 +1599,6 @@ function removeSymptom(button) {
                 name: document.getElementById('name').value.trim(),
                 phone: document.getElementById('phone').value.trim(),
                 visitCount: visitCount,
-                selectedMenu: selectedMenu,
                 selectedSymptom: selectedSymptom && selectedSymptom.length > 0 ? selectedSymptom : null, // 空の選択肢をチェック
                 irradiationsCount: irradiationsCount,
                 dates: selectedFullDate ? [selectedFullDate] : null, // 空チェック
@@ -1627,12 +1631,23 @@ function removeSymptom(button) {
                 ? formData.selectedSymptom.map(item => `${item.name}`).join(',')
                 : 'メニュー未選択';
 
-            // irradiationsCountの整形（nullチェック）
-            const irradiationsText = formData.irradiationsCount || 'なし';
+            // irradiationsCount がある時だけ追加
+            const irradiationsPart = formData.irradiationsCount
+                ? `,${formData.irradiationsCount}`
+                : '';
 
             liff.sendMessages([{
                 type: 'text',
-                text: `【予約フォーム】\nお名前：${formData.name}\n電話番号：${formData.phone}\nご来店回数：${formData.visitCount}\nコース：${formData.selectedMenu}\nメニュー：${selectedSymptomText},${irradiationsText}\n希望日時：\n${formData.dates[0]}\nメッセージ：${formData.message}`
+                text:
+                    `【予約フォーム】
+≪並木クリニック店≫
+お名前：${formData.name}
+電話番号：${formData.phone}
+ご来店回数：${formData.visitCount}
+メニュー：${selectedSymptomText}${irradiationsPart}
+希望日時：
+${formData.dates[0]}
+メッセージ：${formData.message}`
             }]).then(() => {
                 /* メッセージ送信成功時の処理 */
                 alert('当日キャンセルは無いようにお願いいたします。');
@@ -1664,7 +1679,7 @@ function removeSymptom(button) {
                 return;
             }
 
-            const url = 'https://script.google.com/macros/s/AKfycbwCxnJaxGZ46c3TnnesuZcD_zuxuVoSHoDHo5MxkRzChcK5vZDwBs4HstzkXO-KLyuDYA/exec' +
+            const url = 'https://script.google.com/macros/s/AKfycbzqPxw-SHOi7N6li7LPS_AO2QD4stqXF6khUt50ioD-puy_2QMVN1ozgkcad3oJKUUV/exec' +
                 `?startTime=${startTime.toISOString()}&endTime=${endTime.toISOString()}`;
 
             try {
@@ -1815,7 +1830,7 @@ function removeSymptom(button) {
                                 overlapping++;
                             }
                         });
-                        if (overlapping >= 3) {
+                        if (overlapping >= 2) {
                             overLimit = true;
                             break;
                         }
@@ -1826,10 +1841,6 @@ function removeSymptom(button) {
                         cell.textContent = '◯';
                         cell.classList.add('available');
                     } else if (isBusinessEventTime && overLimit) {
-                        cell.textContent = '✕';
-                        cell.classList.add('unavailable');
-                    } else if (slotStart.getDay() === 0 && !isBusinessDay && businessEventTimes.length === 0) {
-                        // 日曜日で、営業日でない場合は ✕
                         cell.textContent = '✕';
                         cell.classList.add('unavailable');
                     } else if (isBusinessDay && !overLimit) {
