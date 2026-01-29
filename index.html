@@ -992,11 +992,26 @@
     <div class="container">
         <h1>母乳育児相談室まどか<br>（並木クリニック店）<br>予約フォーム
         </h1>
-        <div class="label">お客様名<span class="required">必須</span></div>
+        <div class="label">フルネーム<span class="required">必須</span></div>
         <input type="text" id="name" placeholder="お名前を入力してください" oninput="saveInput('name')">
 
         <div class="label">電話番号<span class="required">必須</span></div>
         <input type="tel" id="phone" placeholder="電話番号を入力してください" oninput="saveInput('phone')">
+
+        <div class="label">住所<span class="required">必須</span></div>
+        <input type="text" id="address" placeholder="住所を入力してください" oninput="saveInput('address')">
+
+        <div class="label">出産した日<span class="required">必須</span></div>
+        <input type="text" id="deliveryDate" placeholder="例：2025年1月1日" oninput="saveInput('deliveryDate')">
+
+        <div class="label">お子様のお名前<span class="required">必須</span></div>
+        <input type="text" id="childName" placeholder="お子様のお名前を入力してください" oninput="saveInput('childName')">
+
+        <div class="label">お子様の性別<span class="required">必須</span></div>
+        <input type="text" id="childGender" placeholder="お子様の性別を入力してください" oninput="saveInput('childGender')">
+
+        <div class="label">出産場所<span class="required">必須</span></div>
+        <input type="text" id="birthPlace" placeholder="出産場所を入力してください" oninput="saveInput('birthPlace')">
 
         <div class="label">ご来店回数<span class="required">必須</span></div>
         <div class="visit-buttons">
@@ -1012,6 +1027,7 @@
             <button type="button" onclick="selectSymptom(this)" data-price="0">初診・60分</button>
             <button type="button" onclick="selectSymptom(this)" data-price="0">再診・30分</button>
             <button type="button" onclick="selectSymptom(this)" data-price="0">入院中・30分</button>
+            <button type="button" onclick="selectSymptom(this)" data-price="0">産後ケア利用中 30分</button>
         </div>
         <div class="labeltyuuou">
             <span class="highlight-text">オプション</span>
@@ -1118,6 +1134,7 @@
         let selectedirradiationsTime = 0; // 訪問回数で選択された時間
 
         let menuTimes = {
+            '産後ケア利用中 30分': 60,
             '初診・60分': 90,
             '再診・30分': 60,
             '入院中・30分': 60
@@ -1136,9 +1153,19 @@
         document.addEventListener('DOMContentLoaded', function () {
             const savedName = localStorage.getItem('name');
             const savedPhone = localStorage.getItem('phone');
+            const savedAddress = localStorage.getItem('address');
+            const savedDeliveryDate = localStorage.getItem('deliveryDate');
+            const savedChildName = localStorage.getItem('childName');
+            const savedChildGender = localStorage.getItem('childGender');
+            const savedBirthPlace = localStorage.getItem('birthPlace');
 
             if (savedName) document.getElementById('name').value = savedName;
             if (savedPhone) document.getElementById('phone').value = savedPhone;
+            if (savedAddress) document.getElementById('address').value = savedAddress;
+            if (savedDeliveryDate) document.getElementById('deliveryDate').value = savedDeliveryDate;
+            if (savedChildName) document.getElementById('childName').value = savedChildName;
+            if (savedChildGender) document.getElementById('childGender').value = savedChildGender;
+            if (savedBirthPlace) document.getElementById('birthPlace').value = savedBirthPlace;
         });
 
         // スムーズスクロール
@@ -1180,8 +1207,38 @@
             // 修正ボタン付きのHTMLを作成
             document.getElementById('displayInfo').innerHTML = `
         <div class="info-row">
-            <p><span style="color:#0c0c0c;"><strong>お名前</strong></span>：${name}</p>
+            <p><span style="color:#0c0c0c;"><strong>フルネーム</strong></span>：${name}</p>
             <button class="edit-button" onclick="scrollToElement('name')">修正</button>
+        </div>
+        <hr>
+        <div class="info-row">
+            <p><span style="color:#0c0c0c;"><strong>電話番号</strong></span>：${document.getElementById('phone').value}</p>
+            <button class="edit-button" onclick="scrollToElement('phone')">修正</button>
+        </div>
+        <hr>
+        <div class="info-row">
+            <p><span style="color:#0c0c0c;"><strong>住所</strong></span>：${document.getElementById('address').value}</p>
+            <button class="edit-button" onclick="scrollToElement('address')">修正</button>
+        </div>
+        <hr>
+        <div class="info-row">
+            <p><span style="color:#0c0c0c;"><strong>出産した日</strong></span>：${document.getElementById('deliveryDate').value}</p>
+            <button class="edit-button" onclick="scrollToElement('deliveryDate')">修正</button>
+        </div>
+        <hr>
+        <div class="info-row">
+            <p><span style="color:#0c0c0c;"><strong>お子様のお名前</strong></span>：${document.getElementById('childName').value}</p>
+            <button class="edit-button" onclick="scrollToElement('childName')">修正</button>
+        </div>
+        <hr>
+        <div class="info-row">
+            <p><span style="color:#0c0c0c;"><strong>お子様の性別</strong></span>：${document.getElementById('childGender').value}</p>
+            <button class="edit-button" onclick="scrollToElement('childGender')">修正</button>
+        </div>
+        <hr>
+        <div class="info-row">
+            <p><span style="color:#0c0c0c;"><strong>出産場所</strong></span>：${document.getElementById('birthPlace').value}</p>
+            <button class="edit-button" onclick="scrollToElement('birthPlace')">修正</button>
         </div>
         <hr>
         <div class="info-row">
@@ -1216,7 +1273,14 @@
         }
 
         // 各ボタンや入力フィールドでupdateDisplayInfoを呼び出すようにする
-        document.getElementById('name').addEventListener('input', updateDisplayInfo);
+
+        const inputIds = ['name', 'phone', 'address', 'deliveryDate', 'childName', 'childGender', 'birthPlace'];
+        inputIds.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('input', updateDisplayInfo);
+            }
+        });
         document.querySelectorAll('.visit-buttons button').forEach(button => {
             button.addEventListener('click', updateDisplayInfo);
         });
@@ -1578,9 +1642,9 @@
             updateDisplayInfo();
         }
 
-// ---------------------------------------------------------
+        // ---------------------------------------------------------
         // ▼▼▼ 修正箇所：二重送信防止用の変数を定義 ▼▼▼
-        let isSubmitting = false; 
+        let isSubmitting = false;
         // ---------------------------------------------------------
 
         // ... (他の変数はそのまま) ...
@@ -1610,10 +1674,15 @@
             const formData = {
                 name: document.getElementById('name').value.trim(),
                 phone: document.getElementById('phone').value.trim(),
+                address: document.getElementById('address').value.trim(),
+                deliveryDate: document.getElementById('deliveryDate').value.trim(),
+                childName: document.getElementById('childName').value.trim(),
+                childGender: document.getElementById('childGender').value.trim(),
+                birthPlace: document.getElementById('birthPlace').value.trim(),
                 visitCount: visitCount,
-                selectedSymptom: selectedSymptom && selectedSymptom.length > 0 ? selectedSymptom : null, 
+                selectedSymptom: selectedSymptom && selectedSymptom.length > 0 ? selectedSymptom : null,
                 irradiationsCount: irradiationsCount,
-                dates: selectedFullDate ? [selectedFullDate] : null, 
+                dates: selectedFullDate ? [selectedFullDate] : null,
                 message: document.getElementById('message').value.trim()
             };
 
@@ -1627,6 +1696,12 @@
             if (!formData.phone) {
                 alert('電話番号を入力してください。');
                 resetSubmitState(); // ▼▼▼ ボタンを元に戻す
+                return;
+            }
+
+            if (!formData.address) {
+                alert('住所を入力してください。');
+                resetSubmitState();
                 return;
             }
 
@@ -1655,10 +1730,15 @@
             liff.sendMessages([{
                 type: 'text',
                 text:
-                    `【予約フォーム】
+                    `【並木クリニック店予約フォーム】
 ≪並木クリニック店≫
-お名前：${formData.name}
+フルネーム：${formData.name}
 電話番号：${formData.phone}
+住所：${formData.address}
+出産した日：${formData.deliveryDate}
+お子様のお名前：${formData.childName}
+お子様の性別：${formData.childGender}
+出産場所：${formData.birthPlace}
 ご来店回数：${formData.visitCount}
 メニュー：${selectedSymptomText}${irradiationsPart}
 希望日時：
@@ -2020,4 +2100,3 @@ ${formData.dates[0]}
 </body>
 
 </html>
-
