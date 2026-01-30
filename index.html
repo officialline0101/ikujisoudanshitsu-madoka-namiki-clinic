@@ -17,7 +17,7 @@
             /* 画面中央に固定 */
             transform: translateY(-50%) translateX(16px);
             /* 中央配置と右ずらし */
-            background: #98FB98;
+            background: #FAFAD2;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -38,7 +38,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: white;
+            color: #050505;
             text-decoration: none;
             font-size: 10px;
             margin: 5px 0;
@@ -104,8 +104,8 @@
         }
 
         h1 {
-            background: linear-gradient(135deg, #98FB98, #98FB98);
-            color: white;
+            background: linear-gradient(135deg, #FAFAD2, #FAFAD2);
+            color: #313131;
             padding: 20px;
             border-radius: 0 0px 0px 0px;
             text-align: center;
@@ -123,8 +123,8 @@
             margin-bottom: 20px;
             padding: 3px;
             font-weight: 400;
-            background-color: #98FB98;
-            color: #ffffff;
+            background-color: #FAFAD2;
+            color: #313131;
             border-radius: 0px;
             font-size: 18px;
             text-align: center;
@@ -141,8 +141,8 @@
             display: block;
             margin-bottom: 20px;
             padding: 3px;
-            background-color: #98FB98;
-            color: #ffffff;
+            background-color: #FAFAD2;
+            color: #313131;
             border-radius: 0px;
             font-size: 18px;
             text-align: center;
@@ -160,8 +160,8 @@
             margin-bottom: 10px;
             padding: 3px;
             font-weight: 400;
-            background-color: #98FB98;
-            color: #ffffff;
+            background-color: #FAFAD2;
+            color: #313131;
             border-radius: 0px;
             font-size: 18px;
             text-align: center;
@@ -260,7 +260,7 @@
             border: none;
             border-radius: 4px;
             background-color: #ff4c4c;
-            color: #fff;
+            color: #0a0a0a;
             font-size: 18px;
             cursor: pointer;
         }
@@ -323,7 +323,7 @@
         }
 
         .calendar td.selected {
-            background-color: #98FB98;
+            background-color: #FAFAD2;
             color: #fff;
         }
 
@@ -597,7 +597,7 @@
 
         .highlight-text {
             display: inline-block;
-            color: #ffffff;
+            color: #313131;
             /* オプションテキストの色 */
         }
 
@@ -662,7 +662,7 @@
             width: 100%;
             padding: 15px;
             font-size: 18px;
-            background-color: #98FB98;
+            background-color: #FAFAD2;
             margin-top: 12px;
             /* ← ここで下方向にずらす */
         }
@@ -691,7 +691,7 @@
             /* ここで枠線を指定 */
             outline-offset: 2px;
             /* 外側に色を追加 */
-            box-shadow: 0 0 0 3px #98FB98
+            box-shadow: 0 0 0 3px #FAFAD2
         }
 
         /* 必須マークのスタイル */
@@ -990,7 +990,7 @@
     </div>
 
     <div class="container">
-        <h1>母乳育児相談室まどか<br>（並木クリニック店）<br>予約フォーム
+        <h1>母乳育児相談室まどか<br>（金足店）<br>予約フォーム
         </h1>
         <div class="label">フルネーム<span class="required">必須</span></div>
         <input type="text" id="name" placeholder="お名前を入力してください" oninput="saveInput('name')">
@@ -1019,24 +1019,41 @@
             <button type="button" id="repeatVisit" onclick="selectVisit(this)">2回目以降</button>
         </div>
 
+        <div class="label" id="course">メニューをお選びください<span class="required">必須</span></div>
+        <div class="info-text">※メニューを選択すると<br>空き状況のカレンダーが表示されます</div>
+        <div class="menu-sections">
+            <button type="button" onclick="showMenu('male')">桶谷式母乳マッサージ</button>
+            <button type="button" onclick="showMenu('female')">Revi・エステ</button>
+        </div>
+
         <div id="treatment-text" style="display: none; margin-bottom: 10px;"></div>
 
-        <div class="label" id="course">メニューをお選びください<span class="required">必須</span></div>
-        <div class="info-text">※メニューを選択すると空き状況のカレンダーが表示されます</div>
-        <div class="symptoms">
-            <button type="button" onclick="selectSymptom(this)" data-price="0">初診・60分</button>
-            <button type="button" onclick="selectSymptom(this)" data-price="0">再診・30分</button>
-            <button type="button" onclick="selectSymptom(this)" data-price="0">入院中・30分</button>
-            <button type="button" onclick="selectSymptom(this)" data-price="0">産後ケア利用中 30分</button>
+        <div id="male" class="menu-section">
+            <div class="labeltyuuou">
+                <span class="highlight-text">◆桶谷式母乳マッサージ◆</span>
+            </div>
+            <div class="symptoms">
+                <button type="button" onclick="selectSymptom(this)" data-price="15000">初診・60分</button>
+                <button type="button" onclick="selectSymptom(this)" data-price="15000">再診・30分</button>
+            </div>
+            <div class="labeltyuuou">
+                <span class="highlight-text">オプション</span>
+            </div>
+            <div class="irradiations">
+                <button type="button" id="firstirradiations" onclick="selectirradiations(this)"
+                    data-price="0">旦那様・同席</button>
+                <button type="button" id="secondirradiations" onclick="selectirradiations(this)"
+                    data-price="0">お子様・同席</button>
+            </div>
         </div>
-        <div class="labeltyuuou">
-            <span class="highlight-text">オプション</span>
-        </div>
-        <div class="irradiations">
-            <button type="button" id="firstirradiations" onclick="selectirradiations(this)"
-                data-price="0">旦那様・同席</button>
-            <button type="button" id="repeatirradiations" onclick="selectirradiations(this)"
-                data-price="0">お子様・同席</button>
+
+        <div id="female" class="menu-section">
+            <div class="labeltyuuou">
+                <span class="highlight-text">◆Revi・エステ◆</span>
+            </div>
+            <div class="symptoms">
+                <button type="button" onclick="selectSymptom(this)" data-price="15000">後日</button>
+            </div>
         </div>
 
         <div class="label">希望日時<span class="required">必須</span></div>
@@ -1083,7 +1100,7 @@
             </div>
         </div>
 
-        <div class="labeltyuuou">メッセージ<br>（質問等お気軽にご記入ください）</div>
+        <div class="labeltyuuou">お悩み・症状などがある方はご記入ください</div>
         <textarea id="message" rows="4" placeholder="メッセージを入力してください"></textarea>
 
         <div class="labeltyuuou">ご予約内容</div>
@@ -1134,10 +1151,9 @@
         let selectedirradiationsTime = 0; // 訪問回数で選択された時間
 
         let menuTimes = {
-            '産後ケア利用中 30分': 60,
             '初診・60分': 90,
             '再診・30分': 60,
-            '入院中・30分': 60
+            '後日': 0
         };
 
 
@@ -1206,6 +1222,7 @@
 
             // 修正ボタン付きのHTMLを作成
             document.getElementById('displayInfo').innerHTML = `
+
         <div class="info-row">
             <p><span style="color:#0c0c0c;"><strong>フルネーム</strong></span>：${name}</p>
             <button class="edit-button" onclick="scrollToElement('name')">修正</button>
@@ -1273,7 +1290,6 @@
         }
 
         // 各ボタンや入力フィールドでupdateDisplayInfoを呼び出すようにする
-
         const inputIds = ['name', 'phone', 'address', 'deliveryDate', 'childName', 'childGender', 'birthPlace'];
         inputIds.forEach(id => {
             const el = document.getElementById(id);
@@ -1642,34 +1658,14 @@
             updateDisplayInfo();
         }
 
-        // ---------------------------------------------------------
-        // ▼▼▼ 修正箇所：二重送信防止用の変数を定義 ▼▼▼
+        // ▼▼▼ 追加：送信中フラグを定義 ▼▼▼
         let isSubmitting = false;
-        // ---------------------------------------------------------
-
-        // ... (他の変数はそのまま) ...
 
         function submitForm() {
-            // ▼▼▼ 修正箇所：すでに送信処理中なら何もしない ▼▼▼
+            // ▼▼▼ 追加：送信中ならここで処理を強制終了（連打防止） ▼▼▼
             if (isSubmitting) {
                 return;
             }
-
-            // ▼▼▼ 修正箇所：送信フラグを立てて、ボタンを無効化（連打防止） ▼▼▼
-            isSubmitting = true;
-            const submitBtn = document.querySelector('.submit-button');
-            const originalText = submitBtn.textContent; // 元のテキストを保存
-            submitBtn.disabled = true;
-            submitBtn.textContent = '送信中...';
-            submitBtn.style.backgroundColor = '#ccc'; // 色を変えて無効感を出す
-
-            // エラーなどで処理を中断する場合に、ボタンを元に戻す関数
-            const resetSubmitState = () => {
-                isSubmitting = false;
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalText;
-                submitBtn.style.backgroundColor = '#98FB98'; // 元の色に戻す
-            };
 
             const formData = {
                 name: document.getElementById('name').value.trim(),
@@ -1688,34 +1684,58 @@
 
             // フォームデータのチェック
             if (!formData.name) {
-                alert('お名前を入力してください。');
-                resetSubmitState(); // ▼▼▼ ボタンを元に戻す
+                alert('フルネームを入力してください。');
                 return;
             }
 
             if (!formData.phone) {
                 alert('電話番号を入力してください。');
-                resetSubmitState(); // ▼▼▼ ボタンを元に戻す
                 return;
             }
 
             if (!formData.address) {
                 alert('住所を入力してください。');
-                resetSubmitState();
+                return;
+            }
+
+            if (!formData.deliveryDate) {
+                alert('出産した日を入力してください。');
+                return;
+            }
+
+            if (!formData.childName) {
+                alert('お子様のお名前を入力してください。');
+                return;
+            }
+
+            if (!formData.childGender) {
+                alert('お子様の性別を入力してください。');
+                return;
+            }
+
+            if (!formData.birthPlace) {
+                alert('出産場所を入力してください。');
                 return;
             }
 
             if (!formData.selectedSymptom) {
                 alert('メニューを選択してください。');
-                resetSubmitState(); // ▼▼▼ ボタンを元に戻す
                 return;
             }
 
             if (!formData.dates) {
                 alert('希望日時を選択してください。');
-                resetSubmitState(); // ▼▼▼ ボタンを元に戻す
                 return;
             }
+
+            // ▼▼▼ 追加：チェックを通過したらロックをかける ▼▼▼
+            isSubmitting = true;
+
+            // ユーザーにわかるようにボタンの見た目を変える
+            const submitBtn = document.querySelector('.submit-button');
+            submitBtn.disabled = true; // ボタンを押せなくする
+            submitBtn.innerText = "送信中..."; // 文言を変える
+            submitBtn.style.backgroundColor = "#ccc"; // 色をグレーにする
 
             // selectedSymptomを文字列に整形
             const selectedSymptomText = formData.selectedSymptom
@@ -1730,8 +1750,8 @@
             liff.sendMessages([{
                 type: 'text',
                 text:
-                    `【並木クリニック店予約フォーム】
-≪並木クリニック店≫
+                    `【金足店予約フォーム】
+≪金足店≫
 フルネーム：${formData.name}
 電話番号：${formData.phone}
 住所：${formData.address}
@@ -1749,12 +1769,19 @@ ${formData.dates[0]}
                 alert('当日キャンセルは無いようにお願いいたします。');
                 /* LIFFウィンドウを閉じる */
                 liff.closeWindow();
-                // 成功時はウィンドウが閉じるので、ボタンを戻す必要はありません
+
+                // 成功時はウィンドウが閉じるのでフラグ解除は不要ですが、
+                // 万が一閉じなかった場合のために残しておくことも可能です。
             }).catch((err) => {
                 /* メッセージ送信失敗時の処理 */
                 console.error('メッセージの送信に失敗しました', err);
                 alert('送信に失敗しました。もう一度お試しください。');
-                resetSubmitState(); // ▼▼▼ 失敗時は再試行できるようにボタンを元に戻す
+
+                // ▼▼▼ 追加：エラー時はロックを解除して再送信できるようにする ▼▼▼
+                isSubmitting = false;
+                submitBtn.disabled = false;
+                submitBtn.innerText = "予約を行う";
+                submitBtn.style.backgroundColor = "#FAFAD2"; // 元の色に戻す
             });
         }
 
