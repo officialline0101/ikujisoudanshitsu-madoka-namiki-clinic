@@ -466,6 +466,15 @@
             background-color: #d3d3d3;
         }
 
+        .calendar-container.calendar-loading .calendar td:not(:first-child) {
+            pointer-events: none;
+            opacity: 0.45;
+        }
+
+        .calendar-container.calendar-loading .calendar td:not(:first-child):hover {
+            background-color: inherit;
+        }
+
         .menu-section {
             display: none;
         }
@@ -1101,6 +1110,8 @@
         let selectedFullDate = '';
         let currentDate = new Date();
         let availabilityCache = {};
+        let isCalendarLoading = false;
+        let calendarRequestId = 0;
         let irradiationsCount = ''; <!-- 選択された症状を格納する変数 -->
         let totalAmount = 0; // 合計金額を格納する変数
         let menuPrice = 0; // メニューの価格
@@ -1619,6 +1630,10 @@
         }
 
         function selectDate(cell) {
+            if (isCalendarLoading || !cell.getAttribute('data-date')) {
+                return;
+            }
+
             // "unavailable" クラスが付いている場合はクリックを無効化
             if (cell.classList.contains('unavailable')) {
                 return; // 何もせずに終了
@@ -1765,17 +1780,56 @@ ${formData.dates[0]}
             return `${date.getFullYear()}年${('0' + (date.getMonth() + 1)).slice(-2)}月${('0' + date.getDate()).slice(-2)}日 ${('0' + date.getHours()).slice(-2)}:${('0' + date.getMinutes()).slice(-2)}`;
         }
 
+        function setCalendarLoading(isLoading) {
+            isCalendarLoading = isLoading;
+            const calendarContainer = document.querySelector('.calendar-container');
+            if (calendarContainer) {
+                calendarContainer.classList.toggle('calendar-loading', isLoading);
+            }
+
+            document.querySelectorAll('.week-button, .month-button').forEach(button => {
+                button.disabled = isLoading;
+            });
+        }
+
+        function clearCalendarCellsForLoading(date) {
+            const calendar = document.getElementById('calendar1');
+            if (!calendar) return;
+
+            updateCalendarHeader(date);
+
+            const table = calendar.querySelector('table tbody');
+            if (!table) return;
+
+            for (let row of table.rows) {
+                for (let i = 1; i < row.cells.length; i++) {
+                    row.cells[i].textContent = '';
+                    row.cells[i].removeAttribute('data-date');
+                    row.cells[i].classList.remove('available', 'unavailable', 'selected');
+                }
+            }
+        }
+
         async function fetchAvailability(date) {
-            const startTime = new Date(date);
-            const endTime = new Date(date);
+            const requestId = ++calendarRequestId;
+            const targetDate = new Date(date);
+            const startTime = new Date(targetDate);
+            const endTime = new Date(targetDate);
             endTime.setDate(endTime.getDate() + 7);
 
             const cacheKey = startTime.toISOString() + endTime.toISOString();
 
+            setCalendarLoading(true);
+            clearCalendarCellsForLoading(targetDate);
+
             // キャッシュを確認
             if (availabilityCache[cacheKey]) {
                 console.log('Using cached data');
-                updateCalendar(availabilityCache[cacheKey].availability, availabilityCache[cacheKey].businessDays);
+                if (requestId === calendarRequestId) {
+                    updateCalendar(availabilityCache[cacheKey].availability, availabilityCache[cacheKey].businessDays, targetDate);
+                    hideLoadingSpinner();
+                    setCalendarLoading(false);
+                }
                 return;
             }
 
@@ -1799,15 +1853,20 @@ ${formData.dates[0]}
                 // データをキャッシュに保存
                 availabilityCache[cacheKey] = { availability: data, businessDays: businessDays };
 
-                updateCalendar(data, businessDays);
+                if (requestId === calendarRequestId) {
+                    updateCalendar(data, businessDays, targetDate);
+                }
             } catch (error) {
                 console.error('Error fetching availability:', error);
             } finally {
-                hideLoadingSpinner(); // Hide loading spinner
+                if (requestId === calendarRequestId) {
+                    hideLoadingSpinner(); // Hide loading spinner
+                    setCalendarLoading(false);
+                }
             }
         }
 
-        function updateCalendar(availability, businessDays) {
+        function updateCalendar(availability, businessDays, displayDate = currentDate) {
             const calendar = document.getElementById('calendar1');
             const table = calendar.querySelector('table tbody');
 
@@ -1836,7 +1895,7 @@ ${formData.dates[0]}
             }
 
             // テーブルのヘッダーを更新
-            updateCalendarHeader(currentDate);
+            updateCalendarHeader(displayDate);
 
             // 各セルを空白にリセットし、クラスもリセット
             for (let row of table.rows) {
@@ -1852,7 +1911,7 @@ ${formData.dates[0]}
 
             // テーブルの内容を更新
             for (let i = 0; i < 7; i++) {
-                const day = new Date(currentDate);
+                const day = new Date(displayDate);
                 day.setDate(day.getDate() + i);
 
                 let businessEventTimes = []; // 営業日のイベント時間帯を記録する配列
